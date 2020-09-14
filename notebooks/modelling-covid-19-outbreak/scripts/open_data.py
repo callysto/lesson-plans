@@ -73,7 +73,7 @@ def plot_model_and_data(b):
     display(tab1)
     print("Each infection will generate approximately", numerator/denominator , "new infections.")
     
-    fit_data(Delta, beta, mu, epsilon,gamma,alpha,delta)
+    fit_data(Delta, beta, mu, eps,gamma,alpha,delta)
     
 if __name__ == "__main__":
     
