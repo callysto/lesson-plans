@@ -1,6 +1,6 @@
 # Author: Laura Gutierrez Funderburk
 # Created on: August 2020
-# Last modified on: September 17 2020
+# Last modified on: September 18 2020
 
 import numpy as np
 from scipy.integrate import odeint
@@ -166,7 +166,7 @@ def fit_data(Delta, beta, mu, epsilon,gamma,alpha,delta):
     fig = go.Figure(data=[trace3,trace2],layout=layout)
     
     fig.show()
-
+    
 def plot_model_and_data(button):
     """
     This function creates an interactive plot with a first guess for parameters in our SEIR model
@@ -180,13 +180,13 @@ def plot_model_and_data(button):
     """
     
     # Obtain positional value for parameters from all_the_widget list (see main program for details)
-    beta = all_the_widgets[0].value
-    eps = all_the_widgets[1].value
-    gamma = all_the_widgets[2].value
-    alpha = all_the_widgets[3].value
-    Delta =  all_the_widgets[4].value
-    mu =  all_the_widgets[5].value
-    delta =  all_the_widgets[6].value
+    beta = all_the_widgets1[0].value
+    eps = all_the_widgets1[1].value
+    gamma = all_the_widgets1[2].value
+    alpha = all_the_widgets1[3].value
+    Delta =  all_the_widgets1[4].value
+    mu =  all_the_widgets1[5].value
+    delta =  all_the_widgets1[6].value
     # Compute R0 
     numerator = beta*eps
     denominator = (alpha + gamma + mu)*(eps + mu)
@@ -203,6 +203,21 @@ if __name__ == "__main__":
     # PD formatting
     # Call function
     pd.core.frame.DataFrame.drop_prefix = drop_prefix
+    
+    # Local backup of data 
+    dff = pd.read_csv("./data/confirmed.csv")
+    dff = dff.set_index("Country/Region")
+    dff = order_dates(dff)    
+    country = "Canada"
+    by_prov = dff[dff.index==country].set_index("Province/State").T.iloc[:-4,]
+    by_prov["TotalDailyCase"] = by_prov.sum(axis=1)
+
+    # This variable contains data on COVID 19 daily cases
+    non_cumulative_cases = by_prov.diff(axis=0)
+
+    t = np.linspace(0, len(non_cumulative_cases["TotalDailyCase"]), len(non_cumulative_cases["TotalDailyCase"]))
+
+    
 
     ## Getting data
     try:
@@ -217,7 +232,8 @@ if __name__ == "__main__":
         print("Download is successful!")
     except:
         
-        print("COULD NOT ESTABLISH CONNECTION TO SERVER!!! TRY LATER")
+        print("COULD NOT ESTABLISH CONNECTION TO SERVER!!! USING LOCAL FILE")
+          
         
     try:   
         
@@ -234,7 +250,8 @@ if __name__ == "__main__":
 
     except:
         
-        print("COULD NOT ACCESS DF - ENSURE FORMAT IS CORRECT")
+        print("Loading local file")
+    
         
         
     style = {'description_width': 'initial'}
@@ -270,15 +287,12 @@ if __name__ == "__main__":
     CD_button1.on_click( plot_model_and_data )
 
     # user menu using categories found above
-    tab4 = VBox(children=[HBox(children=all_the_widgets[0:3]),HBox(children=all_the_widgets[3:6]),
-                          HBox(children=all_the_widgets[6:]),
+    tab4 = VBox(children=[HBox(children=all_the_widgets1[0:3]),HBox(children=all_the_widgets1[3:6]),
+                          HBox(children=all_the_widgets1[6:]),
                           CD_button1])
     tab1 = widgets.Tab(children=[tab4])
     tab1.set_title(0, 'Choose Parameters')
-    
-    # Let's add a date
-    # A grid of time points (in days)
-    # Initial number of infected and recovered individuals, I0 and R0.
+   
     
 
 
