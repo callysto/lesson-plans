@@ -101,6 +101,8 @@ class Fishtrap:
         """runs the model with quota and changes the instances values to match
         input:
             quota"""
+        #TODO: Experiment with changing to while(self.harvest_available != 0)
+        # This would allow us to see how long we could sustain a population at a given quota level
         for x in range(10):
             self.harvest_available = self.run_step()
             self.run_year(quota)
@@ -125,7 +127,7 @@ class Fishtrap:
         N = split_list(self.N)
         # create subplot
         fig = make_subplots(rows=1,cols=2,
-                subplot_titles=('Fish Population', 'harvested fish'),
+                subplot_titles=('Fish population', 'Harvested fish'),
                 specs=[[{'type': 'xy'}, {'type': 'pie'}]])
         #Add population line graph
         fig.add_trace(go.Scatter(y=N['odds'], x=np.linspace(1, 11, 6), name='odd year population',
@@ -136,6 +138,9 @@ class Fishtrap:
                 hovertemplate =
                 'Year: %{x}'+ '<br>Pop: %{y}'),
                 row=1, col=1)
+        fig.update_xaxes(title_text="year", row=1, col=1)
+        fig.update_yaxes(title_text="population", row=1, col=1)
+
         # cannot use 'paper' as yref due to bug in sublplot.
         fig.add_shape(type='line',
                 xref='x', yref='y',
@@ -145,7 +150,7 @@ class Fishtrap:
 
         # create pie chart
         colors = ['#636EFA', '#EF553B']        
-        labels = ['odd year', 'even year']
+        labels = ['total odd year harvest', 'total even year harvest']
         M = split_list(self.harvest_record)
         values = [sum(M['odds']), sum(M['evens'])]
         fig.add_trace(go.Pie(labels=labels, values=values, hoverinfo='label', textinfo='value', marker=dict(colors=colors)), 
