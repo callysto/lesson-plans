@@ -1,3 +1,13 @@
+import numpy as np
+import pandas as pd
+import math
+import plotly.graph_objects as go
+from copy import copy
+from plotly.subplots import make_subplots
+from ipywidgets import interact, interactive, fixed, interact_manual
+import ipywidgets as widgets
+
+
 def split_list(lst):
     even_list = lst[::2]
     odd_list = lst[1::2]
@@ -13,10 +23,15 @@ class Fishtrap:
         self.N = [N1, N2]
         self.t = 2
         self.harvest_available = 0
+        self.harvest_record = [0,0]
 
 
     def run_step(self, N=None):
-        """Run the model to produce the next years population abundance."""
+        """Run the model to produce the next years population abundance.
+        input:
+            N: array holding the population abundance record for the fish.
+        return:
+            The next years abundance of fish"""
         if N is None:
             N = self.N
         t = len(N)
@@ -26,56 +41,136 @@ class Fishtrap:
         
         return N[t-2] * math.exp(r - (b * N[t-2]) - (c * b * N[t-1]))
         
-    def display(self):
-        """Show the next year's abundance"""
-        before_harvesting = self.run_step()
-        self.harvest_available = math.floor(before_harvesting)
-        
-        print('year: ', self.t+1, 'num fish: ', math.floor(before_harvesting))
-        
-    def harvesting(self, harvest):
-        """Run the model for one year and harvest fish set by Harvest"""
-        if(isinstance(harvest, int)):
-            if(harvest >= 0 and harvest <= self.harvest_available):
-                self.N.append(math.floor(self.harvest_available - harvest))
+    def run_year(self, quota):
+        """Run the model for one year and harvest fish set by Harvest.
+        input: 
+            quota: integer amount represnting the maximum number of fish harvested in this year
+        raises:
+            ValueError: if quota is not a non-negative integer"""
+        if(isinstance(quota, int)):
+            if(quota >= 0):
+                self.N.append(max(0, math.floor(self.harvest_available - quota)))
+                self.harvest_record.append(min(quota, math.floor(self.harvest_available)))
                 self.t += 1
                 self.harvest_available = 0 
-            elif(harvest >= 0):
-                #if harvesting more than the available - kill the population
-                self.N.append(0)
-                self.t +=1
-                self.harvest_available=0
             else:
-                raise ValueError("harvest must be a positive number.")
+                # quota is negative
+                raise ValueError("quota must be a non-negative number.")
         else:
-            raise ValueError("harvest must be a valid integer. Try Again.")
+            #quota is not an integer
+            raise ValueError("quota must be a valid integer. Try Again.")
             
     def make_figure(self, N):
-        """Produce a simple line plot"""
+        """Produce a simple line plot.
+        returns: plotly.go figure object"""
         fig = go.Figure()
-        fig.add_trace(go.Scatter(y=N['odds'], x=np.linspace(1, 11, 6)))
-        fig.add_trace(go.Scatter(y=N['evens'], x=np.linspace(2, 12, 6)))
+        fig.add_trace(go.Scatter(y=N['odds'], x=np.linspace(1, 11, 6), name='odd year population',
+            hovertemplate = 'Year: %{x}'+ '<br>Pop: %{y}'))
+        fig.add_trace(go.Scatter(y=N['evens'], x=np.linspace(2, 12, 6), name='even year population',
+            hovertemplate = 'Year: %{x}'+ '<br>Pop: %{y}'))
+        fig.add_shape(type='line',
+                xref='x', yref='paper',
+                x0=2.5, y0=0, x1=2.5, y1=1,
+                line=dict(color='Black', width=3))
         return fig
-    
+
+    def make_pieplot(self):
+        "produces a pieplot showing the total fish harvested"
+        split_harvest = split_list(self.harvest_record)
+        labels = ['odd year', 'even year']
+        values = [sum(split_harvest['odds']), sum(split_harvest['evens'])]
+
+        fig = go.Figure(data=[go.Pie(labels=labels, values=values, title='Fish Harvested by Population')])
+        fig.update_traces(hoverinfo='label', textinfo='value')
+        return fig
+
     def project_pop(self):
-        """Project population without mutating the model's state (no harvesting)."""
+        """Project population without mutating the model's state (no harvesting).
+        returns: a dictionary showing both odd an even years' population growth without harvesting"""
         M = self.N[0:2]
         for x in range(10):
             M.append(self.run_step(M))
         split_N = split_list(M)
+        
+        fig = self.make_figure(split_N)
+        fig.update_layout(title='Projected Fish Population')
 
-        return self.make_figure(split_N)
-    
-    def model_with_quota(self, quota):
-        """Run the model for 10 years with a set quota"""
+        return fig
+
+    def run_ten_years_quota(self, quota):
+        """runs the model with quota and changes the instances values to match
+        input:
+            quota"""
         for x in range(10):
             self.harvest_available = self.run_step()
-            self.harvesting(quota)
+            self.run_year(quota)
+
+    def model_with_quota(self, quota):
+        """Run the model for 10 years with a set quota
+        input:
+            quota: number of fish that can be harvested each year
+        returns:
+            plotly go figure object"""
+        self.run_ten_years_quota(quota)
         split_N = split_list(self.N)
-        return self.make_figure(split_N)
-    
+        fig = self.make_figure(split_N)
+        fig.update_layout(title='Fish Population')
+        return fig
+
+    def show_results(self):
+        """Create side by side result plots using the data in the instance
+        Returns:
+            plotly go figure holding the line chart and pie graph"""
+
+        N = split_list(self.N)
+        # create subplot
+        fig = make_subplots(rows=1,cols=2,
+                subplot_titles=('Fish Population', 'harvested fish'),
+                specs=[[{'type': 'xy'}, {'type': 'pie'}]])
+        #Add population line graph
+        fig.add_trace(go.Scatter(y=N['odds'], x=np.linspace(1, 11, 6), name='odd year population',
+                hovertemplate =
+                'Year: %{x}'+ '<br>Pop: %{y}'),
+                row=1, col=1)
+        fig.add_trace(go.Scatter(y=N['evens'], x=np.linspace(2, 12, 6), name='even year population',
+                hovertemplate =
+                'Year: %{x}'+ '<br>Pop: %{y}'),
+                row=1, col=1)
+        # cannot use 'paper' as yref due to bug in sublplot.
+        fig.add_shape(type='line',
+                xref='x', yref='y',
+                x0=2.5, y0=-10, x1=2.5, y1=1000,
+                line=dict(color='Black', width=3),
+                row=1, col=1)
+
+        # create pie chart
+        colors = ['#636EFA', '#EF553B']        
+        labels = ['odd year', 'even year']
+        M = split_list(self.harvest_record)
+        values = [sum(M['odds']), sum(M['evens'])]
+        fig.add_trace(go.Pie(labels=labels, values=values, hoverinfo='label', textinfo='value', marker=dict(colors=colors)), 
+                row=1, col=2)
+
+        # add title
+        fig.update_layout(title_text='Results') 
+        
+        return fig
+
     def reset(self):
-        """return instance to default state"""
+        """brings instance to default state"""
         self.N = self.N[0:2]
         self.t = 2
         self.harvest_available = 0
+        self.harvest_record = [0,0]
+
+    def make_output_quota(self, quota):
+        """resets the instance, runs the model and creates subplot output.
+        shows the outputs.
+        input: 
+            quota(int) - the number of fish harvested at the river-mouth per year
+        returns:
+            plotly subplot showing the results
+        """
+        self.reset()
+        self.run_ten_years_quota(quota)
+        return self.show_results()
