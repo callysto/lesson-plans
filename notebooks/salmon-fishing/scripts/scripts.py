@@ -97,23 +97,30 @@ class Fishtrap:
 
         return fig
 
-    def run_ten_years_quota(self, quota):
+    def run_ten_years_quota(self, quota,flag):
         """runs the model with quota and changes the instances values to match
         input:
             quota"""
         #TODO: Experiment with changing to while(self.harvest_available != 0)
         # This would allow us to see how long we could sustain a population at a given quota level
-        for x in range(10):
+        if flag==True:
+            for x in range(10):
+                self.harvest_available = self.run_step()
+                self.run_year(quota)
+        else:
+            
             self.harvest_available = self.run_step()
-            self.run_year(quota)
-
-    def model_with_quota(self, quota):
+            while self.harvest_available !=0:
+                self.harvest_available = self.run_step()
+                self.run_year(quota)
+                
+    def model_with_quota(self, quota,flag):
         """Run the model for 10 years with a set quota
         input:
             quota: number of fish that can be harvested each year
         returns:
             plotly go figure object"""
-        self.run_ten_years_quota(quota)
+        self.run_ten_years_quota(quota,flag)
         split_N = split_list(self.N)
         fig = self.make_figure(split_N)
         fig.update_layout(title='Fish Population')
