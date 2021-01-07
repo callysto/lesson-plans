@@ -1,3 +1,13 @@
+# Code authors: Bryce Haley, Laura G. Funderburk
+# Model from Cycles, stochasticity and density dependence in pink salmon population dynamics (2011) by Krkosek et al. https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3107658/
+# Last modified: Jan 6 2021 
+
+"""
+This script contains code that implements a fish trap using an adaptation of the Ricker model, where the user can modify a quota (how much fish to harvest 
+
+on any given year), and observe the population size for pink salmon (even/odd year lineages)
+
+"""
 import numpy as np
 import pandas as pd
 import math
