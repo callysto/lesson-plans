@@ -18,6 +18,6 @@ will then be able to visually see how effective the trap is based on the
 modelling. We then evaluate the relationship between quota (how much fish 
 to harvest) vs population size for pink salmon over the course of 10 years.
 
-If you wish to use this material, please ensure you are following the terms of this [license](https://github.com/BryceHaley/Callysto-Fish-Traps/blob/master/LICENSE.md).
+If you wish to use this material, please ensure you are following the terms of this [license](https://github.com/callysto/lesson-plans/blob/master/LICENSE.md).
 
 Related notebooks: [Coast Salish Basket Motifs](https://github.com/cchauve/Callysto-Salish-Baskets)
