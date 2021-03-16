@@ -1,7 +1,5 @@
 # Interactive Notebooks for fish trap modelling
 
-### Authors: Cedric Chauve, Laura Gutierrez Funderburk, Bryce Haley, Veselin Jungic
-
 ### Acknowledgements
 
 We thank the Tla’amin Nation for producing media content and generously sharing their knowledge on the longstanding tradition of fish traps within ʔagayqsɛn (Ahgykson Island), formerly Harwood Island, in British Columbia, Canada. 
