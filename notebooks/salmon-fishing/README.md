@@ -2,6 +2,14 @@
 
 ### Authors: Cedric Chauve, Laura Gutierrez Funderburk, Bryce Haley, Veselin Jungic
 
+### Acknowledgements
+
+We thank the Tla’amin Nation for producing media content and generously sharing their knowledge on the longstanding tradition of fish traps within ʔagayqsɛn (Ahgykson Island), formerly Harwood Island, in British Columbia, Canada. 
+
+We thank Anouk de Brouwer, Rachel Dunn, Courtney Van Den Elzen, Janson Lin, and Pierayeh Vahdani, for their contributions to code as part of the Vancouver DataJam 2020. 
+
+Developer team: Cedric Chauve, Laura Gutierrez Funderburk, Bryce Haley, Veselin Jungic
+
 <a href="https://tinyurl.com/y37hrspp" target="_blank"><img src="https://raw.githubusercontent.com/callysto/curriculum-notebooks/master/open-in-callysto-button.svg?sanitize=true" width="123" height="24" alt="Open in Callysto"/></a> Part I: Parameters in Northern Coast Salish fish traps
 
 <a href="https://tinyurl.com/y6cdcw2n" target="_blank"><img src="https://raw.githubusercontent.com/callysto/curriculum-notebooks/master/open-in-callysto-button.svg?sanitize=true" width="123" height="24" alt="Open in Callysto"/></a> Part II: Impact of greedy harvesting on pink salmon populations
