@@ -1,6 +1,6 @@
 # Authors: Bryce Haley, Laura Gutierrez Funderburk
 # Created on June 2020
-# Last modified on Feb 26 2021
+# Last modified on March 30 2021
 """
 This script contains functions whose goal is to model Coast Salish Fish Traps
 
@@ -559,8 +559,8 @@ def create_3d_trap(radius, height, delta):
     beach_surf = plt3d.plot_surface(xx, yy, zz, alpha=0.2, color = 'brown', label = "beach")
    
    # tide_surf equations below get the legend to show
-    beach_surf._facecolors2d=beach_surf._facecolors3d
-    beach_surf._edgecolors2d=beach_surf._edgecolors3d
+    beach_surf._facecolors2d=beach_surf._facecolor3d
+    beach_surf._edgecolors2d=beach_surf._edgecolor3d
 
 
     # find data for the points on the trap on top of the beach points
@@ -819,8 +819,8 @@ def create_3d_trap(radius, height, delta):
 
     beach_surf = plt3d.plot_surface(xx, yy, zz, alpha=0.2, color = 'brown', label = "beach")
     # tide_surf equations below get the legend to show
-    beach_surf._facecolors2d=beach_surf._facecolors3d
-    beach_surf._edgecolors2d=beach_surf._edgecolors3d
+    beach_surf._facecolors2d=beach_surf._facecolor3d
+    beach_surf._edgecolors2d=beach_surf._edgecolor3d
 
 
 
@@ -835,8 +835,8 @@ def create_3d_trap(radius, height, delta):
     z = np.array(tuple(zip(z, z2)))
 
     trap_surface = plt3d.plot_surface(x,y,z, label='trap')
-    trap_surface._facecolors2d=trap_surface._facecolors3d
-    trap_surface._edgecolors2d=trap_surface._edgecolors3d
+    trap_surface._facecolors2d=trap_surface._facecolor3d
+    trap_surface._edgecolors2d=trap_surface._edgecolor3d
 
 
     plt3d.set_xlabel('X')
