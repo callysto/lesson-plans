@@ -472,6 +472,8 @@ def plot_interactive_map(latitude, longitude, tag="Comox Valley Harbour"):
                       clustered_marker = True).add_to(marker_cluster)
 
     # Show the map
+    map_osm.save("map.html")
+
     display(map_osm)
 
 def create_tide_plot_grade6(radius= default_radius, height= default_height, delta= default_delta,

@@ -176,6 +176,8 @@ class Fishtrap:
 
         # add title
         fig.update_layout(title_text='Results') 
+        fig.write_html("fish_trap_simulation.html")
+
         
         return fig
 
