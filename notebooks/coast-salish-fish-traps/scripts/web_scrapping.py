@@ -13,92 +13,96 @@ from dateutil.relativedelta import relativedelta
 
 ##usage: python web_scrapping.py https://www.waterlevels.gc.ca/eng/data/table/2020/wlev_sec/7965 2020-01-01 2020-04-30
 
-def query_entry_pt(url):
-    """This function takes as input a URL entry point and returns the complete JSON response in a REST API
-    
-    Input:
-        - url(string): complete url (or entry point) pointing at server 
-        
-    Output:
-        - jsonResponse(json object): JSON response associated wtih query
+def get_tide_data(url: str) -> []:
     
     """
+    This function performs a query to a REST API
+    
+    Parameters:
+    ----------
+        url (string) contains url to be queries
+        
+    Returns:
+    --------
+        jsonResponse (list) contains response from query in a list, stored in JSON format
+    
+    """
+    
     try:
-        # Using GET command 
         response = requests.get(url)
-        # Raise issues if response is different from 200
-        response.raise_for_status()
         # access JSOn content
-        return response
+        jsonResponse = response.json()
+        return jsonResponse
 
     except HTTPError as http_err:
         print(f'HTTP error occurred: {http_err}')
     except Exception as err:
         print(f'Other error occurred: {err}')
         
+        
+def build_url(area_id: str) -> str:
+    
+    """
+    This function constructs url for download
+    
+    Parameters:
+    -----------
+        area_id (string) code obtained from https://tides.gc.ca/en/web-services-offered-canadian-hydrographic-service 
+            see station API https://api-iwls.dfo-mpo.gc.ca/api/v1/stations
+            
+    Returns:
+    --------
+        data_url (string) full url from Tides API with the last 6 days from today
+    """
 
-def parse_data(response):
-    soup = BeautifulSoup(response.text, 'html.parser')
+    # Get today's date and date 6 days from today's date
+    now = datetime.now()
+    one_month = now + relativedelta(days=-6)
 
-    tables = soup.find_all(class_='width-100')
+    # Format date into YYYY-MM-DD format
+    startTime = one_month.strftime("%Y-%m-%d")
+    endTime = now.strftime("%Y-%m-%d")
 
-    date = []
-    height = []
-    for table in tables:
+    # Build url
+    from_date = startTime
+    to_date = endTime
+    data_url = f"https://api-iwls.dfo-mpo.gc.ca/api/v1/stations/{area_id}/data?time-series-code=wlp&from={from_date}T00:00:00Z&to={to_date}T00:30:00Z"
+    
+    return data_url
 
-        # get month and year from caption
-        month_year = table.find("caption").text.strip()
-        [month,year] = month_year.split()
-
-        # get all cells by looking for 'align-right' class
-        cell = table.find_all(class_="align-right")
-
-        # loop over cells in table
-        # every 1st cell has the day, every 2nd cell has the time, every 3rd cell has the height 
-        for index in range(len(cell)):
-
-            # get day
-            if ((index % 3) == 0):
-                d = cell[index].text.strip()
-
-            # get time 
-            if ((index % 3) == 1):
-                t = cell[index].text.strip()
-
-                # paste year, month, day and time together, and append to date list
-                ymdt_str = '-'.join([year,month,d,t])
-                #ymdt = datetime.strptime(ymdt_str,'%Y-%B-%d-%I:%M %p')
-                date.append(ymdt_str)
-
-            # get tide height
-            if ((index % 3) == 2):
-                height.append(cell[index].text.strip())
-    return [height,date]
-
-def build_df(height,date,startTime, endTime):
-
-    #add lists to dataframe
-    tide_data = pd.DataFrame({"Date":date,"Height_m":height})
-
-    tide_data['Date'] = pd.to_datetime(tide_data['Date'])
-    #subset dataframe to only output data between requested dates
-    tide_data = tide_data[(tide_data['Date']>=startTime) & (tide_data['Date']<=endTime)]
-    tide_data.to_csv(r'./resources/tidesSubset.csv', header = True)
+def build_df(area_id: str) -> pd.DataFrame:
+    """
+    This function performs query and saves result as a dataframe
+    
+    Parameters:
+    -----------
+        area_id (string) code obtained from https://tides.gc.ca/en/web-services-offered-canadian-hydrographic-service 
+            see station API https://api-iwls.dfo-mpo.gc.ca/api/v1/stations
+            
+    Returns:
+    --------
+        data_df (dataframe object) contains JSON response in dataframe format after performing query
+    """
+    
+    # Building url and performing query
+    data_source = build_url(area_id)
+    jsonResponse = get_tide_data(data_source)
+    
+    # Flatten JSON response into a dataframe format
+    data_df = pd.json_normalize(jsonResponse)
+    
+    # Store file and time stamp it
+    now = datetime.now()
+    endTime = now.strftime("%Y-%m-%d")
+    data_df.to_csv(f'./resources/{endTime}_tideData.csv')
+    
+    return data_df
 
 
 if __name__ == "__main__":
 
     #parse arguments
     str(sys.argv)
-    dataURL = str(sys.argv[1])
-    now = datetime.now()
-    one_month = now + relativedelta(months=-1)
+    area_id = str(sys.argv[1])
     
-    startTime = one_month.strftime("%Y-%m-%d")
-    endTime = now.strftime("%Y-%m-%d")
-    
-    
-    # Get data
-    response = query_entry_pt(dataURL)
-    [height,date] = parse_data(response)
-    build_df(height,date,startTime, endTime)
+    build_df(area_id)
