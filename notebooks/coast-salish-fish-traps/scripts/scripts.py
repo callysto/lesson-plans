@@ -1,6 +1,6 @@
 # Authors: Bryce Haley, Laura Gutierrez Funderburk
 # Created on June 2020
-# Last modified on March 30 2021
+# Last modified on Janury 28 2022
 """
 This script contains functions whose goal is to model Coast Salish Fish Traps
 
