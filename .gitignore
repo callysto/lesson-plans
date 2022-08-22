@@ -1,3 +1,6 @@
 .DS_Store
 .ipynb_checkpoints
 *-checkpoint.ipynp
+*.p
+*.gpx
+notebooks/health-data-privacy/data/Sport2/TechnicalReport2016a.pdf
