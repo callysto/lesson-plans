@@ -1,6 +1,6 @@
 # Authors: Bryce Haley, Laura Gutierrez Funderburk
 # Created on June 2020
-# Last modified on Janury 28 2022
+# Last modified on January 27 2023 by Jordan Swanson
 """
 This script contains functions whose goal is to model Coast Salish Fish Traps
 
@@ -747,6 +747,7 @@ def run_ui_updated(radius, height, location,harvesting_percent):
                   hovertemplate=' %{y:.3f}m'),
         row=1, col=1
     )
+    fig.update_layout(yaxis_title='Meters above Sea Level')
     
     # FISH SIMULATION
      
@@ -809,7 +810,7 @@ def create_3d_trap(radius, height, delta):
     h = height
     r = radius
 
-    plt3d = plt.figure(figsize=(10,10)).gca(projection='3d')
+    plt3d = plt.figure(figsize=(10,10)).add_subplot(projection='3d')
 
     # create x,y
     xx, yy = np.meshgrid(range(-35, 35), range(-25, 45))
