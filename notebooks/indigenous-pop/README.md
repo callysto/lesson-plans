@@ -1,2 +1,2 @@
-# Population_ind
-Draft notebooks on Indigenous populations
+# Indigenous Population
+Draft notebooks on Indigenous populations, historical and present day.
