@@ -1,6 +1,6 @@
 # Authors: Bryce Haley, Laura Gutierrez Funderburk
 # Created on June 2020
-# Last modified on January 27 2023 by Jordan Swanson
+# Modified on January 27 2023 by Jordan Swanson, 2023-11-14 by David Hay
 """
 This script contains functions whose goal is to model Coast Salish Fish Traps
 
@@ -459,7 +459,7 @@ def plot_interactive_map(latitude, longitude, tag="Comox Valley Harbour"):
     SC_COORDINATES = [latitude, longitude]
 
     # Create a map using our initial coordinates
-    map_osm=folium.Map(location=SC_COORDINATES, zoom_start=10, tiles='stamenterrain')
+    map_osm=folium.Map(location=SC_COORDINATES, zoom_start=10)
 
     marker_cluster = MarkerCluster().add_to(map_osm)
     folium.Marker(location = [SC_COORDINATES[0],SC_COORDINATES[1]],
