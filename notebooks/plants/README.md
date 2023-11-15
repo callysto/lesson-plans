@@ -11,3 +11,5 @@ eg:
 
 You may also need to do a pip install. You can do this from the Jupyter notebook with the "! pip" command:
 - ! pip install "anywidget[dev]"
+
+Once this is done, you should be able to run the test notebook "Phidget4-anywidget_v2.ipynb"
