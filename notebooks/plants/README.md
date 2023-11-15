@@ -1,6 +1,6 @@
 This is a test branch for using Phidgets with the "Anywidget" tool.
 
-Currently it DOES NOT WORK in the regular Callysto Hub, but it does work in the callysto Lab enviroment. 
+Currently it DOES NOT WORK in the regular Callysto Hub, but it does work in the Callysto Lab enviroment. 
 
 To get to the "lab" environment, log into hub.callysto.ca and change the "tree" in the https address to "lab"
 
@@ -13,5 +13,7 @@ You may also need to do a pip install. You can do this from the Jupyter notebook
 - ! pip install "anywidget[dev]"
 
 Once this is done, you should be able to run the test notebook "Phidget4-anywidget_v2.ipynb"
+
+It also works in the 2i2c.callysto.ca environment. Maybe only in the "lab" version.
 
 
