@@ -1,11 +1,11 @@
-// ph4xx.js code for Phidgets4.ipynb
+// ph4auto.js code for Phidgets4.ipynb
 // Copyright 2023. Michael Lamoureux with the Callysto project.
 
 // this is the _esm file for an anywidget object to be created in a Python class
 // The UI includes a single button to open, and then close the USB connection to the Phidgets device.
 // It includes a text box showing the status, and 4 text boxes to display values from the Phidget sensors. 
 // We assume 4 devices: temperature, humidity, moisture (voltage ratio), and light, as in the Phidgets plant kit. 
-// The data is updated every minute -- this could be changed in the JS code below (see "onAttached()").
+// The data is updated every second -- this could be changed in the JS code below (see "onAttached()").
 
 // the anywidget model includes four Python variables "temperature, humidity, moisture, luminance" that will be
 // kept updated between the JS front end and the Python kernel.
