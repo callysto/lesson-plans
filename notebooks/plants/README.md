@@ -17,8 +17,11 @@ There is a conditional install of the module "anywidget"
 Successfully tested on:
 - Mac OS in Chrome and Opera browsers
 - Windows OS in Chrome browser
+- Raspberry Pi in Chromium browser (latest OS and udev rules installed)
 
-Partial success here:
-- Raspberry Pi OS in Chromium browser.
-The Phidgets connect and data can be read. However, the "anywidget" model fails to update the Python variables.
-It seems to be a problem with "anywidget" module, as even their sample code (counter) fails. 
+Important notes on Raspberry Pi:
+- does not work with the old "buster" operating system
+- does work on the latest operating system "bookworm". I have not tested others.
+- it is important to install a file on the Raspberry Pi to allow access to the USB port.
+- See the desciption here: [https://www.phidgets.com/docs/OS_-_Linux](https://www.phidgets.com/docs/OS_-_Linux)
+
