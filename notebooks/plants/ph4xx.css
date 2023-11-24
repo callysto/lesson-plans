@@ -1,0 +1,9 @@
+/* css format file for PhidgetsWidget, Callysto colours */
+/* Copyright 2023. Michael Lamoureux with the Callysto project. */
+.ph-button {color: white; 
+    background-color:rgb(96, 107, 174); 
+    border-radius: 8px; 
+    font-size: 24px; 
+    display: block;
+    padding: 15px 32px;}
+.ph-button:hover { background-color:rgb(120, 128, 187); }
