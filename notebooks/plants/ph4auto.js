@@ -102,8 +102,8 @@ export function render({ model, el }) {
         	console.log('L onDetach called. ');
         }
 
-        chMoist.setIsHubPortDevice(true);
-        chMoist.setHubPort(model.get("hubPort"));
+        //chMoist.setIsHubPortDevice(true);
+        //chMoist.setHubPort(model.get("hubPort"));
     	try {
     		await conn.connect();
             conn.requestWebUSBDeviceAccess();
