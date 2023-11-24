@@ -17,4 +17,8 @@ There is a conditional install of the module "anywidget"
 Successfully tested on:
 - Mac OS in Chrome and Opera browsers
 - Windows OS in Chrome browser
+
+Partial success here:
 - Raspberry Pi OS in Chromium browser
+The Phidgets connect and data can be read. However, the "anywidget" model fails to update the Python variables.
+It seems to be a problem with "anywidget" module, as even their sample code (counter) fails. 
