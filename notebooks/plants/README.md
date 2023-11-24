@@ -22,6 +22,7 @@ Successfully tested on:
 Important notes on Raspberry Pi:
 - does not work with the old "buster" operating system
 - does work on the latest operating system "bookworm". I have not tested others.
-- it is important to install a file on the Raspberry Pi to allow access to the USB port.
-- See the desciption here: [https://www.phidgets.com/docs/OS_-_Linux](https://www.phidgets.com/docs/OS_-_Linux)
+- it is important to install a file on the Raspberry Pi to allow access to the USB port, as follows:
+- "Setting UDev Rules" on the page [https://www.phidgets.com/docs/OS_-_Linux](https://www.phidgets.com/docs/OS_-_Linux),
+- basically you create a text file "99-libphidget22.rules" with the content indicated, and store it in  "/etc/udev/rules.d"
 
