@@ -11,3 +11,5 @@ Needs to use only certain browsers: Chrome, Chromium, Opera and Edge. Other brow
 On a Raspberry Pi, use the latest OS (bookworm) in order for the anywidgets to work. Set up the udev rules for the R-Pi, as per the Phidgets webpages on setting up udev in Linux. 
 
 The files ph4auto.js and ph4xx.css are required. They get loaded in by anywidgets.
+
+You will need a Phidgets Starter Kit (with VINT, temperature/humidity sensor, two LEDs and two pushbuttons).
