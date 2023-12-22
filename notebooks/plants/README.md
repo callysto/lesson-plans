@@ -1,5 +1,17 @@
 This is a test branch for using Phidgets with the "Anywidget" tool.
 
+Old code is in the folder old_code
+
+Now (Dec 21) all the notebooks use the anywidget module, which runs on Jupyter Lab as well as classic notebooks. 
+
+- PhidgetFour_auto.ipynb:  Connects the phidgets to Plotly gauges, updates automatically
+- PhidgetFour_read.ipynb:   Connects the phidgets to Plotly gauges, updates on button click
+- plants-data-ethercalc-anywidget.ipynb: Connects the phidgets to Plotly gauges, posts to online spreadsheet
+- plants-data-google-anywidget.ipynb: Connects the phidgets to Plotly gauges, posts to online spreadsheet
+- plants-watering-anywidget.ipynb: Connects the phidgets to Plotly gauges, waters on a button click
+- plants-watering-auto-anywidget.ipynb: Connects the phidgets to Plotly gauges, waters automatically
+
+## History 
 Latest test versions (Nov 23) works on both classic Jupyter notebooks as well as the  Callysto Lab enviroment. Test files are:
 - PhidgetFour_auto.ipynb
 - PhidgetFour_read.ipynb
