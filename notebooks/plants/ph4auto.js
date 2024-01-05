@@ -116,7 +116,7 @@ export function render({ model, el }) {
         if (connOpen) {
             chOpen = false;
             try {
-                await chTempe.open(1000);
+                await chTempe.open(2000);
                 console.log('T Channel connected');
                 chOpen = true;
             } catch(err) {
@@ -124,7 +124,7 @@ export function render({ model, el }) {
                 chOpen ||= false;                
             }
             try {
-                await chHumid.open(1000);
+                await chHumid.open(2000);
                 console.log('H Channel connected');
                 chOpen = true;
             } catch(err) {
@@ -132,7 +132,7 @@ export function render({ model, el }) {
                 chOpen ||= false;                
             }
             try {
-                await chMoist.open(1000);
+                await chMoist.open(2000);
                 console.log('M Channel connected');
                 chOpen = true;
             } catch(err) {
@@ -140,7 +140,7 @@ export function render({ model, el }) {
                 chOpen ||= false;                
             }
             try {
-                await chLumin.open(1000);
+                await chLumin.open(2000);
                 console.log('L Channel connected');
                 chOpen = true;
             } catch(err) {
