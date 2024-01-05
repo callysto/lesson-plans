@@ -165,10 +165,10 @@ export function render({ model, el }) {
             button.innerHTML = `Click to connect`;        
         }
     };
-    function onAttach(ch) {
+    function async onAttach(ch) {
         console.log('channel is attached' + ch);
         textStatus.innerHTML = 'Attached.  ';
-        ch.setDataInterval(1000);
+        await ch.setDataInterval(1000);
     }
     async function closeUSB() {
         console.log('closeUSB called');
