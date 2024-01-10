@@ -13,11 +13,9 @@ This folder contains several short notebooks showing how to use the Phidget devi
 - spatial orientation detector
 
 
-We include two versions of each sample:
-- basic (xxx_0.ipynb) which connects the device and shows a value. It has no error messages, to keep the code short.
-- full (xxx.ipynb) which treats the device data as a "widget trait" that can be linked to another ipywidget on screen, using Python code. We might add error messages for debugging, but have not done this yet. The JS code could saved in a separate file; see the Plants notebooks for details.
+The code in the notebook connects the device and shows a value. It has no error messages, to keep the code short.
 
-- Maybe we don't need the first version. Should I delete them?
+The device data is treated as a "widget trait" that can be linked to another ipywidget on screen, using Python code. We have not added error messages for debugging, but the code can be modified. The JS code is in the notebook for the user to see and experiment with. The JS code could saved in a separate file; see the Plants notebooks for details.
 
 #### Programming notes
 
