@@ -1,8 +1,8 @@
 Six notebooks on sports analytics.
 
-- baseball-part1.ipynb: correlations between runs produced, batting average, OBS
+- baseball-part1.ipynb: spray charts, location of hit balls in the field 
 - baseball-part2.ipynb: strike zone heat map
-- baseball-part3.ipynb: location of hit balls in the field
+- baseball-part3.ipynb: correlations between runs produced, batting average, OBS
 
 - soccer-partI.ipynb: types of play on the soccer field, with visualization
 - soccer-partII.ipynb: techniques for games played in the UEFA Champions League
